@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from app.models import *
-from django.http import JsonResponse, HttpResponseNotFound, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 import pandas as pd
 from app.models import CustomUser
-from app.forms import CreateUserForm, CreateCommentUser, CreateQuestionsUserForm
+from app.forms import CreateUserForm, CreateCommentUser, CreateQuestionsUserForm, EditProfileData
 
 
 def pieData(): # получение данных для пирога
@@ -72,6 +72,43 @@ def main(req): # main page_name
     }
 
     return render(req, page_name, values) # рендеринг страницы
+
+
+def editProfileView(req):
+    
+    page_name = 'edit_data.html'
+
+    if req.method == 'POST':
+        # data = {}
+        # user = CustomUser.objects.get(pk=req.user.pk)
+        # if user.check_password(req.POST['old_password']):
+        #     if req.FILES:
+        #         form = EditProfileData(req.POST, req.FILES)
+        #         if form.is_valid():
+        #             form.save()
+        #             data['status'] = 'ok'
+        #             return JsonResponse(data)
+        #         else:
+        #             print(1)
+        #             return HttpResponseBadRequest()
+        #     else:
+        #         form = EditProfileData(req.POST)
+        #         if form.is_valid():
+        #             form.save()
+        #             data['status'] = 'ok'
+        #             return JsonResponse(data)
+        #         else:
+        #             return HttpResponseBadRequest()
+        # else:
+        #     return HttpResponseBadRequest()
+        pass
+    else:
+        form = EditProfileData()
+
+    values = { 
+        'form':form
+    }
+    return render(req, page_name, values)
 
 
 def CreateUserView(req): #регистрация

@@ -83,4 +83,24 @@ class CreateQuestionsUserForm(forms.ModelForm):
                 'style':'resize:none;'
             }),
         }
+
+
+class EditProfileData(UserCreationForm):
+    
+    avatar = forms.ImageField(label='Выберите аватарку')
+
+    class Meta: 
+        model = CustomUser
+        fields = [
+            'email',
+            'avatar',
+            'password1',
+            'password2',
+        ]
+        widgets = {
+            'email':forms.EmailInput(attrs={
+                'placeholder':'Введите электронный почтовый ящик',
+                'class':'form-control',
+            }),
+        }
         

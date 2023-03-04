@@ -2,7 +2,7 @@
 
 
 {% block title %}
-    Мой профиль
+Мой профиль
 {% endblock title %}
 
 
@@ -11,9 +11,9 @@
 
 
 {% block content %}
-    <div class = 'profile_content mt-5'>
-        <div class="container d-flex justify-content-center flex-wrap">
-            <div class="avatar mx-2 shadow rounded-circle" style = '
+<div class='profile_content mt-5'>
+    <div class="container d-flex justify-content-center flex-wrap">
+        <div class="avatar mx-2 shadow rounded-circle" style='
                 height:350px;
                 width: 350px;
                 background-image: url("{{request.user.avatar.url}}");
@@ -21,16 +21,16 @@
                 background-position:center;
                 background-size:cover;
                 '>
-                
-            </div>
-            <div class = 'mx-2 d-flex flex-column justify-content-center'>
-                <p class ='fs-5 fw-bold'> {{ request.user.last_name }} {{ request.user.get_short_name }} {{ request.user.patronymic }}</p>
-                <p class ='fs-5 fw-bold text-primary'> <i class="fa-regular fa-envelope"></i> {{ request.user.email }} </p>
-                <a class="btn btn-danger me-2" href="{% url 'logout' %}"> <i class="fa-solid fa-door-open"></i>
-                    Выход</a>
-            </div>
+
+        </div>
+        <div class='mx-2 d-flex flex-column justify-content-center'>
+            <p class='fs-5 fw-bold'> {{ request.user.last_name }} {{ request.user.get_short_name }} {{ request.user.patronymic }}</p>
+            <p class='fs-5 fw-bold text-primary'> <i class="fa-regular fa-envelope"></i> {{ request.user.email }} </p>
+            <a class="btn btn-primary me-2" href="{% url 'edit_data' %}"> <i class="fa-regular fa-pen-to-square"></i>
+                Редактирование своих данных</a>
+            <a class="btn btn-danger me-2 mt-2" href="{% url 'logout' %}"> <i class="fa-solid fa-door-open"></i>
+                Выход</a>
         </div>
     </div>
+</div>
 {% endblock content %}
-    
-    

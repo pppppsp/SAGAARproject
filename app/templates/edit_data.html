@@ -1,0 +1,44 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}
+    Редактирование данных
+{% endblock title %}
+
+
+{% block scripts %}
+    <script defer src = "{% static 'js/profile/edit.js' %}"></script>
+{% endblock scripts %}
+
+
+{% block content %}
+    <div class = 'edit_container'>
+        <div class="container">
+            <p class = 'text-center fw-bold fs-4 text-primary'>Редактирование данных</p>
+            <div class="form_container">
+                <form id = 'edit_form' class = 'd-flex flex-column' action="POST">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <input class = 'form-control' value = '{{ request.user.email}}' type="email" name="email" id="id_email" placeholder = 'Введите почту'>
+                    </div>
+                    <div class="mb-2">
+                        <input class = 'form-control' type="file" name="avatar" id="id_avatar">
+                    </div>
+                    <div class="mb-2">
+                        <input class = 'form-control' type="password" name="password" id="id_password" placeholder="Введите старый пароль">
+                    </div>
+                    <div class="mb-2">
+                        <input class = 'form-control' type="password" name="password1" id="id_password1" placeholder="Введите новый пароль">
+                    </div>
+                    <div class = 'mb-2'>
+                        <input class = 'form-control' type="password" name="password2" id="id_password2" placeholder="Повторите новый пароль">
+                    </div>
+                    <button class = 'btn btn-indigo mx-auto'>Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    
+    
+    

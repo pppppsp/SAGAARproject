@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser): # пользователь
     patronymic = models.CharField('Отчество', max_length=50, null=True) # отчество
-    avatar = models.ImageField('Аватарка', upload_to='users/') # аватарка
+    avatar = models.ImageField('Аватарка', upload_to='users/', null=True) # аватарка
 
     def __str__(self): # функция для возврата в виде строки
         return f'{self.last_name} {self.first_name} {self.patronymic}' 

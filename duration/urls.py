@@ -16,6 +16,7 @@ urlpatterns = [
     path('direct_map/get/<int:id>', views.getObjView, name = 'get'),
     path('direct_map/search/', views.searchObjView, name = 'search'),
 
+    path('profile/edit/', views.editProfileView, name = 'edit_data'),
     path('add_comment', views.createUserCommentView, name = 'com'),
     path('profile/', views.getProfileView, name = 'profile'),
     path('account/reg', views.CreateUserView, name = 'reg'),
