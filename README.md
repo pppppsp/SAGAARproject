@@ -7,11 +7,8 @@ My project in Django!
 Пакеты:
 
 Django==3.1.
-
 Pillow
-
 Pandas
-
 fontawesomefree
 
 
