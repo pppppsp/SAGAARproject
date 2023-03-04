@@ -19,6 +19,9 @@ class CommentUser(models.Model): # комментарии
     def __str__(self):
         return f'{self.user} - {self.comment}'
 
+    @staticmethod
+    def getCommentsForIndex():
+        return CommentUser.objects.filter(posted=True).order_by("-create_date_comment")[:3]
 
     class Meta: 
         verbose_name = 'Комментарий'

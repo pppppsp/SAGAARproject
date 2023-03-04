@@ -18,7 +18,7 @@
     <p class = 'text-center fs-4 fw-bold text-primary'>Отзывы</p>
     <div class="comment_content d-flex mt-3 flex-wrap">
         {% for o in obj %}
-            <div class="box-comment shadow-sm rounded d-flex flex-column align-items-center p-3 mx-3" style = 'max-width: 450px; min-height: 200px;'>
+            <div class="box-comment shadow-sm rounded d-flex flex-column align-items-center p-3 m-5" style = 'min-width: 320px; max-width: 320px; min-height: 200px;'>
                 <div class = 'avatar shadow-sm rounded-circle' style = '
                     height:150px;
                     width: 150px;
@@ -28,9 +28,9 @@
                     background-size:cover;
                     '></div>
                 <div class ='mt-5'>
-                    <p class = 'fs-5'> {{ o.user.first_name }} {{ o.user.last_name }} {{ o.user.patronymic }} </p>
-                    <p class = ''>  <i class="fa-regular fa-envelope"></i> {{ o.user.email }} </p>
-                    <p class = ''> {{ o.comment }} </p>
+                    <p class = 'fs-5 text-center mx-auto' style="min-height: 60px;"> {{ o.user.first_name }} {{ o.user.last_name }} {{ o.user.patronymic }} </p>
+                    <p class = 'text-center'>  <i class="fa-regular fa-envelope"></i> {{ o.user.email }} </p>
+                    <p class = 'text-center'> {{ o.comment }} </p>
                 </div>
             </div>
         {% empty %}

@@ -45,6 +45,7 @@ def main(req): # main page_name
     obj_users = CustomUser.objects.all().count()
     obj_datas = Datas.objects.all().count()
     obj_active_datas = Datas.objects.filter(active = 'Y').count()
+    obj_comment = CommentUser.getCommentsForIndex()
 
     form = CreateQuestionsUserForm
 
@@ -67,6 +68,7 @@ def main(req): # main page_name
         'line_labels':line_result[1],
         'line_data':line_result[0],
         'form':form,
+        'comment':obj_comment,
     }
 
     return render(req, page_name, values)
