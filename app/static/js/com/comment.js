@@ -1,6 +1,6 @@
 
-const form = document.getElementById('p-form'); // reg form
-const alertBox = document.getElementById('alertBox')
+const form = document.getElementById('p-form'); // получение формы 
+const alertBox = document.getElementById('alertBox') // контейнер с уведомлением
 
 const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value; // csrf
 
@@ -20,31 +20,31 @@ const comment = document.getElementById('id_comment');
 
 const url = window.location.href // местоположение
 
-form.addEventListener('submit', (e)=>{
+form.addEventListener('submit', (e)=>{ // событие при submit
 
-    e.preventDefault()
+    e.preventDefault() // убираем обновление страницы
 
     const fd = new FormData()
         fd.append('csrfmiddlewaretoken', csrf);
         fd.append('comment', comment.value);
 
     $.ajax({
-        type: 'POST',
-        url: url,
-        data: fd,
-        success: function(response){
-            console.log(response)
+        type: 'POST', // метод отправки данных POST
+        url: url, // нужная ссылка - вызов вьюхи
+        data: fd, // Данные
+        success: function(response){ // успешный ответ
+            // console.log(response)
             const textSuccess = `Успешно отправлено! Отзыв в рассмотрении.`;
-            alerts('success', textSuccess);
+            alerts('success', textSuccess); 
 
 
-            setInterval(()=>{
+            setInterval(()=>{ // через 2.5 сек делаем пустой textarea
                 comment.value = ""
             }, 2500);
             
         },
-        error: function(error){
-            console.log(error);
+        error: function(error){ 
+            // console.log(error);
             const textError = `Введите корректные данные!`;
             alerts('danger', textError);
         },

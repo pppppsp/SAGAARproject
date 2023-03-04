@@ -1,6 +1,6 @@
 
-const form = document.getElementById('question-form'); // reg form
-const alertBox = document.getElementById('alertBox')
+const form = document.getElementById('question-form'); // получение формы 
+const alertBox = document.getElementById('alertBox') // контейнер с уведомлением
 
 const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value; // csrf
 
@@ -25,7 +25,7 @@ const url = window.location.href // местоположение
 
 form.addEventListener('submit', (e)=>{
 
-    e.preventDefault()
+    e.preventDefault() // убираем обновление страницы
 
     const fd = new FormData()
 
@@ -35,16 +35,16 @@ form.addEventListener('submit', (e)=>{
     fd.append('desc', desc.value);
 
     $.ajax({
-        type: 'POST',
-        url: url,
-        data: fd,
-        success: function(response){
+        type: 'POST', // метод отправки данных POST
+        url: url, // нужная ссылка - вызов вьюхи
+        data: fd,  // Данные
+        success: function(response){ // успешный ответ
 
             const textSuccess = `Успешно отправлено, ${name.value}!`;
             alerts('success', textSuccess);
 
 
-            setInterval(()=>{
+            setInterval(()=>{ // через 2.5 сек делаем пустые поля
                 name.value=""
                 email.value=""
                 desc.value=""
