@@ -252,6 +252,35 @@ def getObjView(req, id): ## получение нужного комплекса
         return HttpResponseNotFound('Error')
     
 
+def searchObjView(req): # поисковик
+    if req.method == 'POST':
+        res = None
+        search_obj = req.POST.get('message')
+        query = Datas.objects.filter(name__icontains=search_obj)[:4]
+        if len(query) > 0 and len(search_obj) > 0:
+            data = []
+            for q in query:
+                item = {
+                    'id':q.id,
+                    'name':q.name,
+                    'email':q.email,
+                    'contact_number_object':q.contact_number_object,
+                    'short_descr':q.short_descr,
+                    'address':q.address,
+                    'cen_x':q.cen_x,
+                    'cen_y':q.cen_y,
+                    'scale_yan_map':q.scale_yan_map,
+                }
+                data.append(item)
+            res = data 
+        else: 
+            res = 'Спорткомплекс не найден'
+        
+        return JsonResponse({'data':res})
+    return JsonResponse({})
+    # pass
+    
+
 
 
 

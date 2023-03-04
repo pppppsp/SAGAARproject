@@ -14,7 +14,7 @@ urlpatterns = [
     path('load/', views.load_db, name = 'load'),
     path('direct_map/', views.mapView, name = 'map'),
     path('direct_map/get/<int:id>', views.getObjView, name = 'get'),
-
+    path('direct_map/search/', views.searchObjView, name = 'search'),
 
     path('add_comment', views.createUserCommentView, name = 'com'),
     path('profile/', views.getProfileView, name = 'profile'),

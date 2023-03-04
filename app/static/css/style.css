@@ -43,3 +43,7 @@ body::-webkit-scrollbar-thumb {
     top:10px;
     z-index: 2;
 }
+
+.not_visible { 
+    display: none;
+}
