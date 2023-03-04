@@ -1,8 +1,19 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from app.models import CustomUser, CommentUser, ContactUs
+from django.core.validators import RegexValidator
 
 class CreateUserForm(UserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        kirill = [RegexValidator('^[а-яА-Я -]*$', message='Разрешенные символы (кириллица, пробел и тире.)')]
+
+        self.fields['first_name'].validators = kirill
+        self.fields['last_name'].validators = kirill
+        self.fields['patronymic'].validators = kirill
+
+
     avatar = forms.ImageField(label='Выберите аватарку')
     class Meta:
         model = CustomUser
