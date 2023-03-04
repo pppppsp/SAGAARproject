@@ -52,7 +52,7 @@
             scales: {
                 yAxes: [{
                 ticks: {
-                    callback: function(value){return value + " руб"}
+                    callback: function(value){return value + " руб"} // Для отображения в графике в рублях
                     },  
                         
                 }]
@@ -60,7 +60,7 @@
         }
     }
 
-    window.onload = () => { // 
+    window.onload = () => { // инициализация этих графиков и пирогов
         let ctx = document.getElementById('pie-chart').getContext('2d');
         window.myPie = new Chart(ctx, config);
         let eeMyChart = document.getElementById('chart_budget');
