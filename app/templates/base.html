@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link type="icon" href="{% static 'media/favicon.ico' %}">
+    <!-- fontawes start -->
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <!-- fontawes end -->
+
+    <title>{% block title %} {% endblock title %}</title>
+    <script defer src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+
+    {% block scripts %}
+    {% endblock scripts %}
+
+</head>
+
+
+
+<body class = 'd-flex flex-column justify-content-between' style = 'min-height: 100vh;'>
+    <header>
+        <div class="p-3">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 d-flex align-items-center mb-md-0">
+                        <li>
+                            <img src="{% static 'media/logo.svg' %}" width="75px" alt="logo" style = "user-select: none;">
+                        </li>
+                        <li class ='mx-2'>
+                            <a href="{% url 'home' %}" class=" px-2 btn btn-primary mx-2">
+                                <i class="fa-regular fa-star mx-1"></i>
+                                Главная
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'coms' %}" class=" px-2 btn mx-2">
+                                <i class="fa-solid fa-comments"></i>
+                                Отзывы
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'map' %}" class=" px-2 btn mx-2">
+                                <i class="fa-solid fa-map-location-dot mx-1"></i>
+                                Интерактивная карта
+                            </a>
+                        </li>
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'com' %}" class=" px-2 btn mx-2">
+                                <i class="fa-regular fa-comment mx-1"></i>
+                                Написать отзыв
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if request.user.is_superuser %}
+                        <li>
+                            <a href="{% url 'load' %}" class="px-2 fw-bold text-primary btn  mx-2">
+                                <i class="fa-sharp fa-solid fa-database"></i>
+                                Загрузка данных
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+    
+                    <div class="text-end d-flex align-items-center">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'admin:index' %}" class='btn mx-2'><i class="fa-solid fa-user text-primary mx-2"></i> {{ request.user.username }}</a>
+                            {% else %}
+                                <div class = "avatar shadow rounded-circle" style = '
+                                width: 35px; 
+                                height:35px;
+                                background-image: url("{{request.user.avatar.url}}");
+                                background-repeat:no-repeat;
+                                background-position:center;
+                                background-size:cover;
+                                '>
+                                </div>
+                                <a href = "{% url 'profile' %}" class='btn mx-2'>
+                                    {{ request.user.username }}</a>
+                            {% endif %}
+                            <div>
+                                <a class="btn btn-danger me-2" href="{% url 'logout' %}"> <i class="fa-solid fa-door-open"></i>
+                                    Выход</a>
+                            </div>
+                        
+                            {% else %}
+                            <a class="btn btn-indigo me-2" href="{% url 'login' %}">Вход</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id = 'alertBox' class="alertt"></div>
+    <section class="main">
+        {% block content %}
+        {% endblock content %}
+    </section>
+    <footer class = "mt-5 d-flex flex-column justify-content-center shadow pt-3" style='min-height: 250px;'>
+        <div class="container d-flex justify-content-around p-3" style = 'min-height: 190px;'>
+            <div class = 'd-flex flex-column align-items-center' style = 'max-width: 350px;'>
+                <img src="{% static 'media/logo.svg' %}" width="75px" alt="logo" style = 'user-select: none;'>
+                <p class = 'mt-2' style="font-family:'Montserrat-SemiBold';"><span class = 'text-uppercase fw-bold text-primary'>sagaar</span> проект</p>
+            </div>
+            <div class = 'd-flex flex-column'>
+                <a class = 'text-primary' href="tel:89174121232" style="font-family:'Montserrat-SemiBold'">
+                    <i class="fa-solid fa-phone mx-2"></i> 
+                    <span class = 'text-dark fw-bold'>+7 (917) 421 12-32</span> 
+                </a>
+                <a class = 'text-primary mt-2' href="mailto:nicecube@ya.ru" style="font-family:'Montserrat-SemiBold'">
+                    <i class="fa-solid fa-envelope mx-2"></i> 
+                    <span class = 'text-dark fw-bold'>nicecube@ya.ru</span> 
+                </a>
+            </div>
+        </div>
+        <div style = 'height:1px; background: linear-gradient(90deg, #0E6DFC 27.79%, #6D42C1 61.7%);'></div>
+        <div class="container d-flex flex-column align-items-center justify-content-center mt-3">
+            <div>
+                <a class = "fs-4 mx-2 text-primary" href="#"><i class="fa-brands fa-vk"></i></a>
+                <a class = "fs-4 mx-2 text-primary" href="#"><i class="fa-brands fa-discord"></i></a> 
+                <a class = "fs-4 mx-2 text-primary" href="#"><i class="fa-brands fa-telegram"></i></a> 
+            </div>
+            <div class = 'mt-2'>
+                <p class = 'fw-bold' style="font-family:'Montserrat-SemiBold'">Gayfiev Salavat 2023</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+</html>

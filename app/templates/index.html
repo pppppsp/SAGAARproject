@@ -1,0 +1,181 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}
+    Главная
+{% endblock title %}
+    
+
+{% block scripts %}
+    <script src="{% static 'js/chart.min.js' %}"></script>
+    <script defer src="{% static 'js/main.js' %}"></script>
+    <script> 
+    //для диаграммы
+    let config = { // Диаграмма
+        type: 'pie', // тип диаграммы
+        data: {
+        datasets: [{
+            label:'Спорткомлекс', 
+            data: {{ data|safe }},
+            backgroundColor: [
+                'black','#0D6EFD', 'grey', 'orange', 'red', '#6f42c1' // цвета
+            ],
+            borderWidth:2,// толщина между кусочками
+            }],
+            labels: {{ labels|safe }}
+        },
+        options: {
+            responsive: true,
+            
+        }
+    };
+
+
+    // для графика
+    let labels = {{ line_labels|safe }}
+    let data = { // Графика
+        labels:labels,
+        datasets: [{
+            label: 'Финансирование из федерального бюджета',
+            data: {{ line_data|safe }},
+            fill: false,
+            borderColor: '#6610f2',
+            tension: 0.8
+        }]
+    };
+
+    // конфигурация для графика
+    let configLine = {
+        type:'line',
+        data: data,
+        options:{ 
+            scales: {
+                yAxes: [{
+                ticks: {
+                    callback: function(value){return value + " руб"}
+                    },  
+                        
+                }]
+            }
+        }
+    }
+
+    window.onload = () => { // 
+        let ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+        let eeMyChart = document.getElementById('chart_budget');
+        window.myLine = new Chart(eeMyChart, configLine)
+    };
+    </script>
+{% endblock scripts %}
+    
+
+{% block content %}
+    <div class = 'index_container mt-3'> 
+        <div class="hello_container">
+            <div class="container d-flex justify-content-between">
+                <div class="bg d-flex flex-column justify-content-center flex-wrap" style = '
+                    height:60vh;
+                    max-width: 500px;
+                    width: 100%;
+                    background-image: url("{% static 'media/circles.svg' %}");
+                    background-repeat:no-repeat;
+                    background-position:left;
+                    background-size:cover;
+                    '>
+                    <h1 style="font-size:55px; font-family:'Montserrat-SemiBold';"><span class = 'text-uppercase fw-bold text-primary'>sagaar</span> проект</h1>
+                    <p class = 'fs-5' style = "font-family:'Montserrat-SemiBold';">Визуализация открытых данных спорткомлексов</p>
+                    <div>
+                        {% if request.user.is_authenticated %}
+                            <a class = 'btn btn-indigo  text' href="{% url 'profile' %}" style = "font-family:'Montserrat-SemiBold';"> 
+                                <i class="fa-solid fa-address-card"></i>
+                                Профиль
+                            </a>
+                        {% else %}
+                            <a class = 'btn btn-indigo  text' href="{% url 'reg' %}" style = "font-family:'Montserrat-SemiBold';"> 
+                                <i class="fa-regular fa-right-to-bracket"></i>
+                                Создать аккаунт
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div  style="position:relative; top:-37px;">
+                    <img class = 'img-fluid' src="{% static 'media/man.svg' %}" alt="man">
+                </div>
+             
+            </div>
+            <div class = 'mx-auto' style = 'position: relative; top:-175px;'>
+                <img class = 'img-fluid' alt = 'photo' src ="{% static 'media/volna.svg' %}" style = 'width: 100%; user-select: none;' />
+                <img class = 'img-fluid' alt = 'photo' src ="{% static 'media/volna.svg' %}" style = 'width: 100%; user-select: none;  transform: scale(1, -1);' />
+            </div>
+        </div>
+    </div>
+    <!-- stats -->
+    <div style = 'margin-bottom: 150px;'>
+        <p class = "text-center fs-3 fw-bold text-primary">Статистика</p>
+        <div class="container d-flex justify-content-around mt-5">
+            <div class="box shadow text-white rounded-circle d-flex flex-column justify-content-center align-items-center .bg-primary.bg-gradient" style = "max-width: 300px; width: 100%; height: 300px;">
+                <p class ="text-center fs-4 fw-bold mt-5" style = 'min-height: 50px;'>Пользователи</p>
+                <p class ="text-center fw-bold mt-4" style = "font-size: 55px;">{{ user }}</p>
+            </div>
+            <div class="box shadow text-white rounded-circle d-flex flex-column justify-content-center"  style = "max-width: 300px; width: 100%; height: 300px;">
+                <p class ="text-center fs-4 fw-bold mt-5" style = 'min-height: 50px;'>Спорткомлексы</p>
+                <p class ="text-center fw-bold mt-4" style = "font-size: 55px;">{{ dat }}</p>
+            </div>
+            <div class="box shadow text-white rounded-circle d-flex flex-column justify-content-center"  style = "max-width: 300px; width: 100%; height: 300px;">
+                <p class ="text-center fs-4 fw-bold mt-5" style = 'min-height: 50px;'>Активных спорткомлексов</p>
+                <p class ="text-center fw-bold" style = "font-size: 55px;">{{ active_sport }}</p>
+            </div>
+        </div>
+    </div>
+    <!-- stats end -->
+    <!-- money -->
+    <div class = 'container mt-5' id="container">
+        <p class = "text-center fs-3 fw-bold text-primary">Финансирование</p>
+        <div class="content d-flex mt-5 flex-wrap justify-content-center">
+            <div class = 'flex-fill' style = 'max-width: 450px;'>
+                <p class = 'fs-5' style = "font-family: 'Montserrat-Regular'; user-select: none;">Сервис обеспечивает отображение данных по спортивным объектам на интерактивной карте и предоставляет некоторую аналитику по предоставленному набору данных. </p>
+                <p class = 'fs-5' style = "font-family: 'Montserrat-Regular'; user-select: none;">На диаграмме представлены спорткомлексы c хорошим финансированием  <i class="fa-solid fa-ruble-sign"></i> </p>
+            </div>
+            <canvas id="pie-chart" style ="max-width: 700px;"></canvas>
+        </div>
+        <canvas class = 'mt-3' id="chart_budget" style = 'max-width: 100%;'></canvas>
+    </div>
+    <!-- money end -->
+
+
+    <!-- volna -->
+    <div class = 'mx-auto'>
+        <img class = 'img-fluid' alt = 'photo' src ="{% static 'media/volna.svg' %}" style = 'width: 100%; user-select: none;' />
+        <img class = 'img-fluid' alt = 'photo' src ="{% static 'media/volna.svg' %}" style = 'width: 100%; user-select: none;  transform: scale(1, -1);' />
+    </div>
+    <!-- volna end -->
+
+    <!-- contact us -->
+
+    <div class="container d-flex justify-content-center align-items-center flex-wrap" style = 'height: 60vh;'>
+        <div class = 'd-flex flex-column justify-content-center mx-5' style = 'max-width: 350px;'>
+            <img class = 'img-fluid' src="{% static 'media/contact.svg' %}" alt="contact" style = 'user-select: none;'>
+        </div>
+        <div>
+            <p class = "text-center fs-3 fw-bold text-primary">Связаться с нами</p>
+            <form id = 'question-form' class = 'd-flex flex-column justify-content-center mt-2' action="POST" style = 'max-width: 500px; width: 100%;'>
+                {% csrf_token %}
+                <div class = 'mb-2'>
+                    {{ form.name }}
+                </div>
+                <div class = 'mb-2'>
+                    {{ form.email }}
+                </div>
+                <div class = 'mb-2'>
+                    {{ form.desc }}
+                </div>
+                <button class = 'btn btn-indigo mx-auto'>Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- contact us end -->
+
+{% endblock content %}
+    

@@ -1,0 +1,41 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Интерактивная карта
+{% endblock title %}
+
+
+{% block content %}
+  <p class = 'text-center fw-bold fs-4 mt-3 text-primary'>Интерактивная карта</p>
+<div class = 'd-flex'>
+    <div class = 'mt-2' id="map" style="height: 80vh; width: 80%;"></div>
+    <div class = 'overflow-auto scrollspy-example d-flex flex-column mx-3' style = 'height:80vh; max-width: 450px;'>
+            <p class = 'fs-5 fw-bold text-primary'>Список спортивных комплексов</p>
+            <form method="POST">
+                {% csrf_token %}
+                {% for o in objects %}
+                    <button class = 'objbut btn btn-indigo mt-3' data-pk="{{ o.id }}">{{ o.name }}</button>
+                {% empty %}
+                    <p class = 'text-danger fs-4 fw-bold text-uppercase'>Пока нет данных!!</p>
+                {% endfor %}
+            </form>
+    </div>
+</div>
+    
+
+{% endblock content %}
+
+
+{% block scripts %}
+    <!-- START VENDORS JS -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=8baa3b-e1e7-4992-b298-ccf5f4d8af42&lang=ru_RU" type="text/javascript">
+    </script>
+    <script defer src = "{% static 'js/map/map.js' %}"></script>
+    <script>
+    </script>
+{% endblock scripts %}
+    
+    
+    

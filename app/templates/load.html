@@ -1,0 +1,18 @@
+{% extends './base.html' %}
+
+{% block title %} Загрузка бд{% endblock title %}
+
+{% block content %}
+<div class = 'd-flex flex-column justify-content-center' style = 'height: 70vh;'>
+    <div>
+        <p class='fs-1 text-center fw-bold text-primary'>Загрузка данных в БД</p>
+        <form method='POST' enctype="multipart/form-data" class='d-flex flex-column justify-content-center mx-auto'
+            action="{% url 'load' %}" style='max-width: 400px;'>
+            {% csrf_token %}
+            <input class='form-control mx-2' type="file" name="file" id="id_file">
+            <button type='submit' class='btn btn-outline-dark mx-auto mt-2'>Загрузить </button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

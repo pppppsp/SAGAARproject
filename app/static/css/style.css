@@ -1,0 +1,45 @@
+@font-face {
+    font-family: "Montserrat-SemiBold";
+    src: url("../fonts/Montserrat-SemiBold.ttf");
+}
+a { 
+    text-decoration: none;
+}
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.ttf");
+}
+
+.not-visible { 
+    display: none;
+}
+body::-webkit-scrollbar {
+    width: 5px;
+    /* ширина scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: white;
+    /* цвет дорожки */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #6f42c1;
+    /* цвет плашки */
+    border-radius: 20px;
+    /* закругления плашки */
+    border: 3px solid #6f42c1;
+    /* padding вокруг плашки */
+}
+
+/* style for boxs */
+.box { 
+    background: linear-gradient(85.44deg, #0D6EFD 23.32%, rgba(58, 90, 225, 0.9) 55.15%, #6F42C1 92.62%);
+}
+
+.alertt { 
+    position: fixed;
+    right:10px;
+    top:10px;
+    z-index: 2;
+}

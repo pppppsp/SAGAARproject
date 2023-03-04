@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+
+
+{% block title %}
+    Авторизация
+{% endblock title %}
+
+
+{% block content %}
+    <div class="login_content d-flex flex-column justify-content-center align-items-center" style = 'height:70vh;'>
+        <form class = 'shadow-sm p-3 d-flex flex-column rounded' action="{% url 'login' %}" method = "POST" style = "max-width: 400px; width: 100%;">
+            {% csrf_token %}
+            <div class="mb-2">
+                <p class = 'text-center fs-5 fw-bold text-uppercase'  style = 'color:#6610f2'>Авторизация</p>
+            </div>
+            <div class = 'mb-2'>
+                <input class = 'form-control' type="text" name = 'username' id = 'id_username' placeholder = 'Введите логин '>
+            </div>
+            <div class = 'mb-2'>
+                <input class = 'form-control' type="password" name = 'password' id = 'id_password' placeholder = 'Введите пароль'>
+            </div>
+            <p class = 'text-danger'>{{ form.non_field_errors }}</p>
+            <div class = 'mb-2'>
+                <p class = 'text-center fw-bold'>У вас нет аккаунта? <a class = 'fw-bold' href="{% url 'reg' %}" style = 'color:#6610f2'>Создать</a></p>
+            </div>
+            <button class = 'btn btn-indigo mt-2 mx-auto'>Войти</button>
+        </form>
+    </div>
+{% endblock content %}
+    
+    

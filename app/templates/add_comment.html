@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}
+    Добавить отзыв
+{% endblock title %}
+
+
+{% block scripts %}
+    <script defer src ="{% static 'js/com/comment.js' %}"></script>
+{% endblock scripts %}
+    
+
+{% block content %}
+    <div class = 'comment_container' style = 'height: 70vh;'>
+        <div class = 'container'>
+            <form id = 'p-form' class = 'p-3' method="POST">
+                {% csrf_token %}
+                <div class = 'mb-2'>
+                    <p class = 'text-center fs-4 fw-bold' style = 'color:#6610f2'>Написать отзыв</p>
+                </div>
+                <div class = 'mb-2'>
+                    {{ form.comment }}
+                </div>
+                <div class = 'mb-2'>
+                    <p class = ''>После отправки, Ваш отзыв будет <span class = 'fw-bold' style = 'color:#6610f2'>рассмотрен </span> сотрудниками. </p>
+                </div>
+                
+                <button class = 'btn btn-indigo m'>Отправить</button>
+            </form>
+        </div>
+       
+    </div>
+{% endblock content %}
+    
+    
