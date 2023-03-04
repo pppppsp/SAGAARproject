@@ -37,6 +37,7 @@ class CreateUserForm(UserCreationForm):
 
 
 class CreateCommentUser(forms.ModelForm):
+    
     class Meta: 
         model = CommentUser
         fields = [
@@ -52,6 +53,14 @@ class CreateCommentUser(forms.ModelForm):
 
 
 class CreateQuestionsUserForm(forms.ModelForm):
+     
+    def __init__(self, *args, **kwargs):
+        super(CreateQuestionsUserForm, self).__init__(*args, **kwargs)
+        kirill = [RegexValidator('^[а-яА-Я -]*$', message='Разрешенные символы (кириллица, пробел и тире.)')]
+
+        self.fields['name'].validators = kirill
+
+
     class Meta: 
         model = ContactUs
         fields = [
