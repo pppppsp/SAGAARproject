@@ -1,6 +1,8 @@
 # SAGAARproject
 
-Мой второй проект на Django
+My second project in Django!
+
+Для запуска необходимо установить пакеты, которые указаны в <requirements.txt>
 
 Admin:
 1. admin
