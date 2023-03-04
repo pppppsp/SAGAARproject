@@ -4,7 +4,7 @@ My project in Django!
 
 Для запуска необходимо установить пакеты, которые указаны в <requirements.txt>
 
-Пакеты:
+Пакеты: <br/>
 Django==3.1.2 <br/>
 Pillow <br/>
 Pandas <br/>
