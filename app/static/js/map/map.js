@@ -116,7 +116,7 @@ const sendSearchData = (message) => {
                     // </button>
                     // `
                     const btn = document.createElement('button');
-                    btn.className='search_button btn btn-primary mt-2'
+                    btn.className='search_button btn btn-primary m-1'
                     btn.innerHTML=`${data.name}`
                     btn.addEventListener('click', ()=>{
                         
