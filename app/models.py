@@ -3,49 +3,49 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser): # пользователь
-    patronymic = models.CharField('Отчество', max_length=50, null=True)
-    avatar = models.ImageField('Аватарка', upload_to='users/')
+    patronymic = models.CharField('Отчество', max_length=50, null=True) # отчество
+    avatar = models.ImageField('Аватарка', upload_to='users/') # аватарка
 
-    def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.patronymic}'
+    def __str__(self): # функция для возврата в виде строки
+        return f'{self.last_name} {self.first_name} {self.patronymic}' 
 
 
 class CommentUser(models.Model): # комментарии
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
-    create_date_comment = models.DateTimeField('Дата создания комментария',auto_now_add=True)
-    posted = models.BooleanField('Отображается или нет', default=False)
-    comment = models.TextField('Комментарий', max_length=500)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь') # пользователь
+    create_date_comment = models.DateTimeField('Дата создания комментария',auto_now_add=True) # дата создания комментария
+    posted = models.BooleanField('Отображается или нет', default=False) # одобрение
+    comment = models.TextField('Комментарий', max_length=500) # сообщение
 
-    def __str__(self):
+    def __str__(self): # функция для возврата в виде строки
         return f'{self.user} - {self.comment}'
 
     @staticmethod
     def getCommentsForIndex():
-        return CommentUser.objects.filter(posted=True).order_by("-create_date_comment")[:3]
+        return CommentUser.objects.filter(posted=True).order_by("-create_date_comment")[:3] # запрос для возврата с одобренными отзывами
 
-    class Meta: 
+    class Meta: # отображение модели на русском языке
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
 
 class ContactUs(models.Model): # связаться с нами
     name = models.CharField('Имя', max_length=50)
-    email = models.EmailField('Почта',)
-    created = models.DateTimeField('Дата отправки', auto_now_add=True)
-    desc = models.TextField('Сообщение', max_length=175)
+    email = models.EmailField('Почта',) # почта
+    created = models.DateTimeField('Дата отправки', auto_now_add=True) # дата отправки
+    desc = models.TextField('Сообщение', max_length=175) # содержимое
 
-    def __str__(self):
+    def __str__(self): # функция для возврата в виде строки
         return f'{self.name} - {self.email}'
 
 
-    class Meta: 
+    class Meta:  # отображение модели на русском языке
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
 
 
 
-class Datas(models.Model): # Данные из csv
-    name = models.CharField('Название', max_length=55,null=True, blank=True)
+class Datas(models.Model): # Данные из csv  
+    name = models.CharField('Название', max_length=55,null=True, blank=True) # лень дальше комментировать, ну вроде понятно снизу все
     name_in_english = models.CharField('Название (in english)', max_length=55,null=True, blank=True)
     active = models.CharField('Активный', max_length=255,null=True, blank=True)
     short_descr = models.CharField('Краткое описание', max_length=155,null=True, blank=True)
