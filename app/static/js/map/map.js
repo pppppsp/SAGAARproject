@@ -94,7 +94,7 @@ const searchForm = document.getElementById('search-form')
 const resultsBox = document.getElementById('results-box')
 const searchInput = document.getElementById('search-input')
 
-// console.log(`${url}search/2`)
+
 const sendSearchData = (message) => {
     $.ajax({
         type: 'POST', // метод пост
@@ -105,16 +105,10 @@ const sendSearchData = (message) => {
         },
         success: (res) => {
             const data = res.data // присваиваем в переменную data наш результат.
-            console.log()
             if (Array.isArray(data)) { // если это массив
                 resultsBox.innerHTML = "" // чтобы после пустого инпута все исчезалось
                 data.forEach(data=>{ // вывод через цикл результат
 
-                    // resultsBox.innerHTML += `
-                    // <button data-pk='${data.id}' data-name='${data.name}' data-email = '${data.email}' data-contact='${data.contact_number_object}' data-desc='${data.short_descr}' data-address='${data.address}' data-x='${data.cen_x}' data-y='${data.cen_y}' data-scale='${data.scale_yan_map}' class = 'search_button btn btn-primary mt-2'>
-                    //     <p>${data.name}</p>
-                    // </button>
-                    // `
                     const btn = document.createElement('button');
                     btn.className='search_button btn btn-primary m-1'
                     btn.innerHTML=`${data.name}`
