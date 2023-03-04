@@ -4,11 +4,11 @@ My project in Django!
 
 Для запуска необходимо установить пакеты, которые указаны в <requirements.txt>
 
-Пакеты: 
-Django==3.1.2 
-Pillow
-Pandas
-fontawesomefree
+Пакеты:
+Django==3.1.2 <br/>
+Pillow <br/>
+Pandas <br/>
+fontawesomefree <br/>
 
 
 Admin:
