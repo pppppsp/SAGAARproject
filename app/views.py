@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 import pandas as pd
 from app.models import CustomUser
 from app.forms import CreateUserForm, CreateCommentUser, CreateQuestionsUserForm, EditProfileData
-
+from django.contrib.auth.hashers import make_password
 
 def pieData(): # получение данных для пирога
     for_pie_labels = [] # список для названий спорткомплексов 
@@ -79,29 +79,34 @@ def editProfileView(req):
     page_name = 'edit_data.html'
 
     if req.method == 'POST':
-        # data = {}
-        # user = CustomUser.objects.get(pk=req.user.pk)
-        # if user.check_password(req.POST['old_password']):
-        #     if req.FILES:
-        #         form = EditProfileData(req.POST, req.FILES)
-        #         if form.is_valid():
-        #             form.save()
-        #             data['status'] = 'ok'
-        #             return JsonResponse(data)
-        #         else:
-        #             print(1)
-        #             return HttpResponseBadRequest()
-        #     else:
-        #         form = EditProfileData(req.POST)
-        #         if form.is_valid():
-        #             form.save()
-        #             data['status'] = 'ok'
-        #             return JsonResponse(data)
-        #         else:
-        #             return HttpResponseBadRequest()
-        # else:
-        #     return HttpResponseBadRequest()
-        pass
+        data = {}
+        user = CustomUser.objects.get(pk=req.user.pk)
+        if user.check_password(req.POST['old_password']):
+            if req.FILES:
+                print(req.FILES)
+                form = EditProfileData(req.POST, req.FILES)
+                if form.is_valid():
+                    user.email = form.data['email']
+                    user.avatar = req.FILES.get('avatar')
+                    user.set_password(req.POST['password2'])
+                    user.save()
+                    data['status'] = 'ok'
+                    return JsonResponse(data)
+                else:
+                    return HttpResponseBadRequest()
+            else:
+                form = EditProfileData(req.POST)
+                if form.is_valid():
+                    user.email = form.data['email']
+                    user.avatar = req.FILES.get('avatar')
+                    user.set_password(req.POST['password2'])
+                    user.save()
+                    data['status'] = 'ok'
+                    return JsonResponse(data)
+                else:
+                    return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
     else:
         form = EditProfileData()
 
