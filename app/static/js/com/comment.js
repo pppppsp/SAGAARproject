@@ -37,10 +37,7 @@ form.addEventListener('submit', (e)=>{ // событие при submit
             const textSuccess = `Успешно отправлено! Отзыв в рассмотрении.`;
             alerts('success', textSuccess); 
 
-
-            setInterval(()=>{ // через 2.5 сек делаем пустой textarea
-                comment.value = ""
-            }, 2500);
+            comment.value = ""
             
         },
         error: function(error){ 

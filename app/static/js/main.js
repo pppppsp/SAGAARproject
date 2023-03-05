@@ -42,14 +42,10 @@ form.addEventListener('submit', (e)=>{
 
             const textSuccess = `Успешно отправлено, ${name.value}!`;
             alerts('success', textSuccess);
+            name.value=""
+            email.value=""
+            desc.value=""
 
-
-            setInterval(()=>{ // через 2.5 сек делаем пустые поля
-                name.value=""
-                email.value=""
-                desc.value=""
-            }, 2500);
-            
         },
         error: function(error){
             console.log(error);
