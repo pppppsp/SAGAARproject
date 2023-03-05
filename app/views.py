@@ -83,34 +83,21 @@ def editProfileView(req):
         data = {}  # пустой словарь для отправки
         user = CustomUser.objects.get(pk=req.user.pk) # получение пользователя
         if user.check_password(req.POST['old_password']): # если старый пароль соответствует настоящему
-            new_p1 = req.POST.get('password1')
             new_p2 = req.POST.get('password2')
-            if req.FILES: # если существует файл аватарка
-                form = EditProfileData(req.POST, req.FILES) # отправка на проверку
-                if form.is_valid(): # если валидна
-                    user.email = form.data['email'] # запись в переменную с пользователем и сохраняем с статусом ОК
+            form = EditProfileData(req.POST, req.FILES or None) # отправка на проверку
+            if form.is_valid(): # если валидна
+                user.email = form.data['email'] # запись в переменную с пользователем и сохраняем с статусом ОК
+                if req.FILES:
                     user.avatar = req.FILES.get('avatar')
-                    user.set_password(new_p2)
-                    user.save()
-                    data['message'] = f'Вы успешно сменили данные, {req.user.first_name}!'  # сообщение для пользователя
-                    data['status'] = 'ok' # статус
-                    return JsonResponse(data)
-                else:
-                    data['message'] = 'Введите правильные данные.'  # сообщение для пользователя
-                    data['status'] = 'error' # статус
-                    return JsonResponse(data)
-            else: # пытался сделать владиацию на электронную почту, не получилось пока. 
-                if new_p1 == new_p2: # проверка совпадений новых паролей.
-                    user.email = req.POST['email'] # сохранение в пользователя
-                    user.set_password(new_p2) # сохранение в пользователя
-                    user.save() # save
-                    data['message'] = f'Вы успешно сменили данные, {req.user.first_name}!'  # сообщение для пользователя
-                    data['status'] = 'ok' # статус
-                    return JsonResponse(data)
-                else: 
-                    data['message'] = 'Новые пароли не совпадают.' # сообщение для пользователя
-                    data['status'] = 'error' # статус 
-                    return JsonResponse(data)    
+                user.set_password(new_p2) # сохранение в пользователя
+                user.save()
+                data['message'] = f'Вы успешно сменили данные, {req.user.first_name}!'  # сообщение для пользователя
+                data['status'] = 'ok' # статус
+                return JsonResponse(data)
+            else:
+                data['message'] = 'Введите правильные данные.'  # сообщение для пользователя
+                data['status'] = 'error' # статус
+                return JsonResponse(data)
         else:
             data['message'] = 'Неверный старый пароль.' # сообщение для пользователя
             data['status'] = 'error' # статус

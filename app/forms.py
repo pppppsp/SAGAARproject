@@ -87,7 +87,7 @@ class CreateQuestionsUserForm(forms.ModelForm):
 
 class EditProfileData(UserCreationForm):
     
-    avatar = forms.ImageField(label='Выберите аватарку')
+    avatar = forms.ImageField(label='Выберите аватарку', required=False)
 
     class Meta: 
         model = CustomUser
