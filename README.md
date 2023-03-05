@@ -10,6 +10,7 @@ Pillow <br/>
 Pandas <br/>
 fontawesomefree <br/>
 
+открыть терминал и написать ./start или python manage.py runserver
 
 Admin:
 1. admin
