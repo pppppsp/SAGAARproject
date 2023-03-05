@@ -24,8 +24,8 @@ class CommentUser(models.Model): # комментарии
         return CommentUser.objects.filter(posted=True).order_by("-create_date_comment")[:3] # запрос для возврата с одобренными отзывами
 
     class Meta: # отображение модели на русском языке
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
 
 
 class ContactUs(models.Model): # связаться с нами
