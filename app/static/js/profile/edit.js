@@ -39,7 +39,16 @@ form.addEventListener('submit', (e)=>{
         enctype: 'multipart/form-data',
         data: fd,
         success: (response)=>{
-            console.log(response)
+            message = response['message']
+            console.log(message)
+            if (response['status'] == 'error') {
+                alerts('danger', message)
+            } else { 
+                alerts('success', message)
+                setInterval(()=>{
+                    $(location).prop('href','/');
+                }, 2500);
+            }
         },
         error: (response)=>{
             console.log(response)

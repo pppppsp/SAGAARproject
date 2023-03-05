@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 import pandas as pd
 from app.models import CustomUser
 from app.forms import CreateUserForm, CreateCommentUser, CreateQuestionsUserForm, EditProfileData
-from django.contrib.auth.hashers import make_password
+from django.core.validators import validate_email
 
 def pieData(): # получение данных для пирога
     for_pie_labels = [] # список для названий спорткомплексов 
@@ -74,43 +74,51 @@ def main(req): # main page_name
     return render(req, page_name, values) # рендеринг страницы
 
 
+@login_required # обязательная авторизация
 def editProfileView(req):
     
-    page_name = 'edit_data.html'
+    page_name = 'edit_data.html' # ссылка на страницу
 
-    if req.method == 'POST':
-        data = {}
-        user = CustomUser.objects.get(pk=req.user.pk)
-        if user.check_password(req.POST['old_password']):
-            if req.FILES:
-                print(req.FILES)
-                form = EditProfileData(req.POST, req.FILES)
-                if form.is_valid():
-                    user.email = form.data['email']
+    if req.method == 'POST': # если приходит POST
+        data = {}  # пустой словарь для отправки
+        user = CustomUser.objects.get(pk=req.user.pk) # получение пользователя
+        if user.check_password(req.POST['old_password']): # если старый пароль соответствует настоящему
+            new_p1 = req.POST.get('password1')
+            new_p2 = req.POST.get('password2')
+            if req.FILES: # если существует файл аватарка
+                form = EditProfileData(req.POST, req.FILES) # отправка на проверку
+                if form.is_valid(): # если валидна
+                    user.email = form.data['email'] # запись в переменную с пользователем и сохраняем с статусом ОК
                     user.avatar = req.FILES.get('avatar')
-                    user.set_password(req.POST['password2'])
+                    user.set_password(new_p2)
                     user.save()
-                    data['status'] = 'ok'
+                    data['message'] = f'Вы успешно сменили данные, {req.user.first_name}!'  # сообщение для пользователя
+                    data['status'] = 'ok' # статус
                     return JsonResponse(data)
                 else:
-                    return HttpResponseBadRequest()
-            else:
-                form = EditProfileData(req.POST)
-                if form.is_valid():
-                    user.email = form.data['email']
-                    user.avatar = req.FILES.get('avatar')
-                    user.set_password(req.POST['password2'])
-                    user.save()
-                    data['status'] = 'ok'
+                    data['message'] = 'Введите правильные данные.'  # сообщение для пользователя
+                    data['status'] = 'error' # статус
                     return JsonResponse(data)
-                else:
-                    return HttpResponseBadRequest()
+            else: # пытался сделать владиацию на электронную почту, не получилось пока. 
+                if new_p1 == new_p2: # проверка совпадений новых паролей.
+                    user.email = req.POST['email'] # сохранение в пользователя
+                    user.set_password(new_p2) # сохранение в пользователя
+                    user.save() # save
+                    data['message'] = f'Вы успешно сменили данные, {req.user.first_name}!'  # сообщение для пользователя
+                    data['status'] = 'ok' # статус
+                    return JsonResponse(data)
+                else: 
+                    data['message'] = 'Новые пароли не совпадают.' # сообщение для пользователя
+                    data['status'] = 'error' # статус 
+                    return JsonResponse(data)    
         else:
-            return HttpResponseBadRequest()
+            data['message'] = 'Неверный старый пароль.' # сообщение для пользователя
+            data['status'] = 'error' # статус
+            return JsonResponse(data)
     else:
         form = EditProfileData()
 
-    values = { 
+    values = { # переменная словарь для отправки на страницу 
         'form':form
     }
     return render(req, page_name, values)

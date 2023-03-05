@@ -16,7 +16,7 @@
         <div class="container">
             <p class = 'text-center fw-bold fs-4 text-primary'>Редактирование данных</p>
             <div class="form_container">
-                <form id = 'edit_form' class = 'd-flex flex-column' action="POST">
+                <form id = 'edit_form' class = 'd-flex flex-column mx-auto' action="POST" style = 'max-width: 350px;'>
                     {% csrf_token %}
                     <div class="mb-2">
                         <input class = 'form-control' value = '{{ request.user.email}}' type="email" name="email" id="id_email" placeholder = 'Введите почту'>
