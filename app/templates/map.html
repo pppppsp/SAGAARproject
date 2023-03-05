@@ -18,7 +18,7 @@
             <div class = 'search_container' style = 'position: relative;'>
                 <form id="search-form" class="d-flex" autocomplete="off">
                   {% csrf_token %}
-                  <input class="form-control me-1 p-2" type="text" placeholder="Поиск" aria-label="Поиск"
+                  <input class="form-control me-1 p-2" type="search" placeholder="Поиск" aria-label="Поиск"
                     id="search-input">
                 </form>
                 <div id='results-box' class='overflow-auto scrollspy-example results-card not_visible shadow p-2 rounded bg-white mt-1 mx-auto'
